@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- Network --> 
+	<arg name="net_port" default="12346"/>
+	<arg name="hostname" default="127.0.0.1"/>
+
+	<!-- Map --> 
+	<arg name="map_topic" default="map"/>
+	<arg name="map_subscriber_queue_size" default="5"/>
+
+	<!-- GDB -->
+	<arg name="launch-prefix" default="xterm -e gdb --args"/>
+	
+	<node pkg="slam_bridge" type="map_bridge" name="map_bridge" output="screen">
+    	<!-- Network --> 
+		<param name="net_port" value="$(arg net_port)"/>
+    	<param name="hostname" value="$(arg hostname)"/>
+
+	    <!-- Map subscription -->
+	    <param name="map_topic" value="$(arg map_topic)"/>
+	    <param name="map_subscriber_queue_size" value="$(arg map_subscriber_queue_size)"/>
+	</node>
+
+</launch>

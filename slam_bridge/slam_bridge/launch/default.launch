@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<!-- Network --> 
+	<arg name="net_port" default="12346"/>
+	<arg name="hostname" default="127.0.0.1"/>
+<!-- Position --> 
+	<arg name="out_pose_topic" default="slam_out_pose"/>
+	<arg name="pose_subscriber_queue_size" default="5"/>
+<!-- Map --> 
+	<arg name="map_topic" default="map"/>
+	<arg name="map_subscriber_queue_size" default="5"/>
+<!-- Trajectory --> 
+	<arg name="trajectory_topic" default="trajectory"/>
+	<arg name="trajectory_subscriber_queue_size" default="5"/>
+<!-- GDB -->
+	<arg name="launch-prefix" default="xterm -e gdb --args"/>
+
+  	<node pkg="slam_bridge" type="pose_bridge" name="pose_bridge" output="screen">
+		<param name="net_port" value="$(arg net_port)"/>
+    	<param name="hostname" value="$(arg hostname)"/>
+	    <param name="out_pose_topic" value="$(arg out_pose_topic)"/>
+	    <param name="pose_subscriber_queue_size" value="$(arg pose_subscriber_queue_size)"/>
+	</node>
+
+	<node pkg="slam_bridge" type="map_bridge" name="map_bridge" output="screen">
+		<param name="net_port" value="$(arg net_port)"/>
+    	<param name="hostname" value="$(arg hostname)"/>
+	    <param name="map_topic" value="$(arg map_topic)"/>
+	    <param name="map_subscriber_queue_size" value="$(arg map_subscriber_queue_size)"/>
+	</node>
+
+	<node pkg="slam_bridge" type="trajectory_bridge" name="trajectory_bridge" output="screen">
+		<param name="net_port" value="$(arg net_port)"/>
+    	<param name="hostname" value="$(arg hostname)"/>
+	    <param name="trajectory_topic" value="$(arg trajectory_topic)"/>
+	    <param name="trajectory_subscriber_queue_size" value="$(arg trajectory_subscriber_queue_size)"/>
+	</node>
+
+</launch>
